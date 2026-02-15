@@ -1,0 +1,15 @@
+def minimax(values, is_max):
+    if len(values) == 1:
+        return values[0]
+    mid = len(values) // 2
+    left = values[:mid]
+    right = values[mid:]
+    left_value = minimax(left, not is_max)
+    right_value = minimax(right, not is_max)
+    if is_max:
+        return max(left_value, right_value)
+    else:
+        return min(left_value, right_value)
+values = [3, 5, 6, 9, 1, 2, 0, -1]
+result = minimax(values, True)
+print("Optimal value for MAX:", result)

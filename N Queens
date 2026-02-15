@@ -1,0 +1,21 @@
+def is_safe(board, row, col):
+    for i in range(row):
+        if board[i] == col:
+            return False
+    for i in range(row):
+        if abs(board[i] - col) == abs(i - row):
+            return False
+    return True
+def solve_nqueens(n):
+    board = [-1] * n
+    def place_queen(row):
+        if row == n:
+            print(board)
+            return
+        for col in range(n):
+            if is_safe(board, row, col):
+                board[row] = col
+                place_queen(row + 1)
+                board[row] = -1
+    place_queen(0)
+solve_nqueens(4)

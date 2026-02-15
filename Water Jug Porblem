@@ -1,0 +1,33 @@
+from collections import deque
+
+def solve_water_jug():
+    jug1_capacity = 4
+    jug2_capacity = 3
+    visited = []
+    queue = deque()   
+    queue.append((0,0))
+
+    while queue:
+        x, y = queue.popleft()
+
+        if (x, y) in visited:
+            continue
+
+        print("Current State:", (x, y))
+        visited.append((x, y))
+
+        if x == 2:
+            print("Goal reached")
+            return
+        queue.append((jug1_capacity, y))
+        queue.append((x, jug2_capacity))
+        queue.append((0, y))
+        queue.append((x, 0))
+
+        pour = min(x, jug2_capacity - y)
+        queue.append((x - pour, y + pour))
+
+        pour = min(y, jug1_capacity - x)
+        queue.append((x + pour, y - pour))
+
+solve_water_jug()

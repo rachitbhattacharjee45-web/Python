@@ -1,0 +1,52 @@
+# Simple Alpha-Beta Pruning
+
+def alphabeta(values, is_max, alpha, beta):
+    
+    # If only one value left
+    if len(values) == 1:
+        return values[0]
+    
+    mid = len(values) // 2
+    left = values[:mid]
+    right = values[mid:]
+    
+    if is_max:
+        value = float('-inf')
+        
+        # Check left
+        value = max(value, alphabeta(left, False, alpha, beta))
+        alpha = max(alpha, value)
+        
+        # Prune
+        if beta <= alpha:
+            return value
+        
+        # Check right
+        value = max(value, alphabeta(right, False, alpha, beta))
+        alpha = max(alpha, value)
+        
+        return value
+    
+    else:
+        value = float('inf')
+        
+        # Check left
+        value = min(value, alphabeta(left, True, alpha, beta))
+        beta = min(beta, value)
+        
+        # Prune
+        if beta <= alpha:
+            return value
+        
+        # Check right
+        value = min(value, alphabeta(right, True, alpha, beta))
+        beta = min(beta, value)
+        
+        return value
+
+
+values = [3, 5, 6, 9, 1, 2, 0, -1]
+
+result = alphabeta(values, True, float('-inf'), float('inf'))
+
+print("Optimal value using Alpha-Beta:", result)
